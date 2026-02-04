@@ -530,6 +530,8 @@ class TelegramBot:
         data = query.data
         await query.answer()
 
+        await self.clear_last_wizard_keyboard(context)
+
         user_data = context.user_data
         current_state_val = user_data.get("current_state", int(S.TOPIC_OR_TASK))
         current_state = S(current_state_val)
@@ -624,10 +626,12 @@ class TelegramBot:
         self.logger.debug(f"topic_or_task {text}")
 
         if text == "topic":
+            await self.clear_last_wizard_keyboard(context)
             return await self.go_to_state(
                 update, context, from_state=S.TOPIC_OR_TASK, to_state=S.TOPIC
             )
         if text == "task":
+            await self.clear_last_wizard_keyboard(context)
             return await self.go_to_state(
                 update, context, from_state=S.TOPIC_OR_TASK, to_state=S.TASK
             )
@@ -858,6 +862,7 @@ class TelegramBot:
         text = update.message.text
         self.logger.debug(f"length_text: {text}")
         context.user_data["length"] = text
+        await self.clear_last_wizard_keyboard(context)
         return await self.go_to_state(
             update, context, from_state=S.LENGTH, to_state=S.LEVEL
         )
@@ -889,6 +894,7 @@ class TelegramBot:
         text = update.message.text
         self.logger.debug(f"language_level: {text}")
         context.user_data["language_level"] = text
+        await self.clear_last_wizard_keyboard(context)
         return await self.go_to_state(
             update, context, from_state=S.LEVEL, to_state=S.INFO
         )
@@ -918,6 +924,7 @@ class TelegramBot:
         text = update.message.text
         self.logger.debug(f"info_level: {text}")
         context.user_data["info_level"] = text
+        await self.clear_last_wizard_keyboard(context)
         return await self.go_to_state(
             update, context, from_state=S.INFO, to_state=S.LANGUAGE
         )
@@ -959,6 +966,7 @@ class TelegramBot:
         text = update.message.text
         self.logger.debug(f"tone: {text}")
         context.user_data["tone"] = text
+        await self.clear_last_wizard_keyboard(context)
         return await self.go_to_state(
             update, context, from_state=S.TONE, to_state=S.ADDITIONAL
         )
@@ -1115,6 +1123,7 @@ class TelegramBot:
         """processes messages, while in 'free chat'-mode."""
         user_text = update.message.text
         self.logger.debug(f"free_chat_state: received '{user_text}'")
+        await self.clear_last_wizard_keyboard(context)
 
         context.user_data["history"] = context.user_data.get("history", []) + [
             user_text
@@ -1130,10 +1139,12 @@ class TelegramBot:
             response = str(self.ai.invoke(history_str))
             context.user_data["history"].append(response)
 
-            await update.message.reply_text(
+            sent = await update.message.reply_text(
                 response,
                 reply_markup=InlineKeyboardMarkup(self.build_chat_navigation()),
             )
+
+            self.set_last_wizard_message(context, sent)
 
         except Exception as e:
             self.logger.error(f"free_chat_state error: {e}")
