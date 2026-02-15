@@ -1,13 +1,12 @@
 import os
 import shutil
 import yaml
+from pathlib import Path
 
-from crewai_tools.tools import (
-    DOCXSearchTool,
-    PDFSearchTool,
-    TXTSearchTool,
-    WebsiteSearchTool,
-)
+
+from ba_ragmas_chatbot.graph.workflow import create_graph
+from ba_ragmas_chatbot.tools.vectorstore import setup_vectorstore
+
 from telegram import (
     Update,
     InlineKeyboardButton,
@@ -26,9 +25,10 @@ from telegram.ext import (
 )
 
 from langchain_ollama import OllamaLLM
-from src.ba_ragmas_chatbot import logger_config
-from src.ba_ragmas_chatbot.crew import BaRagmasChatbot
+from ba_ragmas_chatbot import logger_config
 from ba_ragmas_chatbot.states import S
+from ba_ragmas_chatbot.paths import DOCUMENTS_DIR
+from ba_ragmas_chatbot.paths import DB_DIR
 
 
 class TelegramBot:
@@ -41,28 +41,42 @@ class TelegramBot:
         "text/plain",
     ]
 
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    yaml_file = os.path.join(current_dir, "config", "configs.yaml")
-    with open(yaml_file, "r") as file:
-        config = yaml.safe_load(file)
-    token = config["chatbot_token"]["token"]
-    llm_name = config["chatbot"]["llm"]["name"]
-    llm_provider = config["chatbot"]["llm"]["provider_name"]
-    llm_url = config["chatbot"]["llm"]["url"]
-    embed_model_name = config["chatbot"]["embedding_model"]["name"]
-    embed_model_provider = config["chatbot"]["embedding_model"]["provider_name"]
-    embed_model_url = config["chatbot"]["embedding_model"]["url"]
+    def __init__(self):
+        self.logger = logger_config.get_logger("telegram bot")
+        self.config = self._load_config()
+        self.token = os.getenv("TELEGRAM_TOKEN")
 
-    tools = []
-    ai = OllamaLLM(model=llm_name)
-    logger = logger_config.get_logger("telegram bot")
+        if not self.token:
+            self.token = self.config.get("chatbot_token", {}).get("token")
+        if not self.token:
+            raise ValueError(
+                "❌ no telegram token found! please set in .env or configs.yaml."
+            )
+        chatbot_cfg = self.config.get("chatbot", {})
+        llm_cfg = chatbot_cfg.get("llm", {})
+        embed_cfg = chatbot_cfg.get("embedding_model", {})
+        self.llm_name = llm_cfg.get("name", "llama3.1:8b-instruct-q8_0")
+        self.llm_url = llm_cfg.get("url", "http://localhost:11434")
+        self.ai = OllamaLLM(model=self.llm_name, base_url=self.llm_url)
+        self.tools = []
+
+    def _load_config(self):
+        """Lädt die Konfiguration robust relativ zum Modulpfad."""
+        here = Path(__file__).resolve().parent
+        config_path = here / "config" / "configs.yaml"
+
+        if not config_path.exists():
+            raise FileNotFoundError(f"Config file not found at: {config_path}")
+
+        with open(config_path, "r", encoding="utf-8") as file:
+            return yaml.safe_load(file)
 
     def clear_db(self):
         """Deletes all database files related to ChromaDB."""
-        db_folder = "./db"
+        db_folder = str(DB_DIR)
         if os.path.exists(db_folder):
             shutil.rmtree(db_folder)
-        os.makedirs(db_folder)
+        os.makedirs(db_folder, exist_ok=True)
 
     # navigation + keyboards
 
@@ -201,7 +215,7 @@ class TelegramBot:
         user_data["state_stack"] = []
         user_data["current_state"] = int(S.TOPIC_OR_TASK)
         user_data["history"] = []
-        self.tools.clear()
+        user_data["file_paths"] = []
         self.logger.info("Wizard data reset (restart).")
 
     def push_state(self, context: CallbackContext, from_state: S) -> None:
@@ -699,7 +713,7 @@ class TelegramBot:
             return int(S.WEBSITE)
 
         try:
-            self.addWebsite(text)
+            context.user_data.setdefault("file_paths", []).append(text)
             await message.reply_text(
                 "✅ Got your website. I'll use it as an information source."
             )
@@ -770,11 +784,8 @@ class TelegramBot:
                 )
                 return int(S.DOCUMENT)
 
-            base_dir = os.path.dirname(__file__)
-            documents_dir = os.path.join(base_dir, "documents")
-            os.makedirs(documents_dir, exist_ok=True)
-
-            file_path = os.path.join(documents_dir, document.file_name)
+            DOCUMENTS_DIR.mkdir(parents=True, exist_ok=True)
+            file_path = str(DOCUMENTS_DIR / document.file_name)
 
             try:
                 file = await context.bot.get_file(document.file_id)
@@ -789,21 +800,10 @@ class TelegramBot:
                 return int(S.DOCUMENT)
 
             try:
-                if document.mime_type == "application/pdf":
-                    self.addPDF(file_path)
-                elif (
-                    document.mime_type
-                    == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                ):
-                    self.addDOCX(file_path)
-                elif document.mime_type == "text/plain":
-                    self.addTxt(file_path)
+                context.user_data.setdefault("file_paths", []).append(file_path)
 
                 await message.reply_text(
                     "✅ Got your document. I'll use it as an information source."
-                )
-                self.logger.info(
-                    f"Document added as RAG source: {document.file_name} ({document.mime_type})"
                 )
             except Exception as e:
                 self.logger.exception(f"Error while adding document RAG tool: {e}")
@@ -923,7 +923,7 @@ class TelegramBot:
     async def info_level(self, update: Update, context: CallbackContext) -> int:
         text = update.message.text
         self.logger.debug(f"info_level: {text}")
-        context.user_data["info_level"] = text
+        context.user_data["information"] = text
         await self.clear_last_wizard_keyboard(context)
         return await self.go_to_state(
             update, context, from_state=S.INFO, to_state=S.LANGUAGE
@@ -1056,10 +1056,35 @@ class TelegramBot:
         }
 
         try:
-            bot = BaRagmasChatbot(self.tools)
-            result = bot.crew().kickoff(inputs=inputs)
-            await query.message.reply_text(str(result))
-            self.logger.debug("confirm_button: Crew run successful.")
+            file_paths = context.user_data.get("file_paths", [])
+            if file_paths:
+                await query.message.reply_text("📚 Indexing sources...")
+                setup_vectorstore(file_paths)
+
+            graph_inputs = {
+                "topic": inputs.get("topic"),
+                "target_len": inputs.get("length"),
+                "target_audience": inputs.get("language_level"),
+                "language": inputs.get("language"),
+                "tone": inputs.get("tone"),
+                "additional_info": inputs.get("additional_information"),
+                "source_documents": file_paths,
+                "history": inputs.get("history", []),
+                "research_data": [],
+                "outline": [],
+                "draft": "",
+                "final_article": "",
+                "revision_count": 0,
+            }
+
+            app = create_graph()
+
+            result_state = app.invoke(graph_inputs)
+
+            final_text = result_state.get("final_article", "⚠️ No article generated.")
+
+            await query.message.reply_text(final_text)
+            self.logger.debug("confirm_button: Graph run successful.")
         except Exception as e:
             self.logger.exception(f"confirm_button: error during crew run: {e}")
             await query.message.reply_text(
@@ -1092,12 +1117,39 @@ class TelegramBot:
             }
 
             try:
-                bot = BaRagmasChatbot(self.tools)
-                result = bot.crew().kickoff(inputs=inputs)
-                await update.message.reply_text(str(result))
-                self.logger.debug("confirm: Crew run successful.")
+
+                file_paths = context.user_data.get("file_paths", [])
+                if file_paths:
+                    await update.message.reply_text("📚 Indexing sources...")
+                    setup_vectorstore(file_paths)
+
+                graph_inputs = {
+                    "topic": inputs.get("topic"),
+                    "target_len": inputs.get("length"),
+                    "target_audience": inputs.get("language_level"),
+                    "language": inputs.get("language"),
+                    "tone": inputs.get("tone"),
+                    "additional_info": inputs.get("additional_information"),
+                    "source_documents": file_paths,
+                    "history": inputs.get("history", []),
+                    "research_data": [],
+                    "outline": [],
+                    "draft": "",
+                    "final_article": "",
+                    "revision_count": 0,
+                }
+
+                app = create_graph()
+                result_state = app.invoke(graph_inputs)
+                final_text = result_state.get(
+                    "final_article", "⚠️ No article generated."
+                )
+
+                await update.message.reply_text(final_text)
+                self.logger.debug("confirm: Graph run successful.")
+
             except Exception as e:
-                self.logger.error(f"confirm: crew error {e}", exc_info=True)
+                self.logger.error(f"confirm: graph error {e}", exc_info=True)
                 await update.message.reply_text(
                     "❌ An error occurred during article generation. Please try again."
                 )
@@ -1285,101 +1337,3 @@ class TelegramBot:
         application.add_handler(CommandHandler("chat", self.chat))
         application.add_handler(conv_handler)
         application.run_polling()
-
-    # RAG-Tools
-
-    def addWebsite(self, url):
-        self.tools.append(
-            WebsiteSearchTool(
-                website=url,
-                config=dict(
-                    llm=dict(
-                        provider=self.llm_provider,
-                        config=dict(
-                            model=self.llm_name,
-                            base_url=self.llm_url,
-                        ),
-                    ),
-                    embedder=dict(
-                        provider=self.embed_model_provider,
-                        config=dict(
-                            model=self.embed_model_name,
-                            base_url=self.embed_model_url,
-                        ),
-                    ),
-                ),
-            )
-        )
-        self.logger.info(f"Website-RAG-Tool added: {url}")
-
-    def addPDF(self, location):
-        self.tools.append(
-            PDFSearchTool(
-                pdf=location,
-                config=dict(
-                    llm=dict(
-                        provider=self.llm_provider,
-                        config=dict(
-                            model=self.llm_name,
-                            base_url=self.llm_url,
-                        ),
-                    ),
-                    embedder=dict(
-                        provider=self.embed_model_provider,
-                        config=dict(
-                            model=self.embed_model_name,
-                            base_url=self.embed_model_url,
-                        ),
-                    ),
-                ),
-            )
-        )
-        self.logger.info(f"PDF-RAG-Tool added: {location}")
-
-    def addDOCX(self, location):
-        self.tools.append(
-            DOCXSearchTool(
-                docx=location,
-                config=dict(
-                    llm=dict(
-                        provider=self.llm_provider,
-                        config=dict(
-                            model=self.llm_name,
-                            base_url=self.llm_url,
-                        ),
-                    ),
-                    embedder=dict(
-                        provider=self.embed_model_provider,
-                        config=dict(
-                            model=self.embed_model_name,
-                            base_url=self.embed_model_url,
-                        ),
-                    ),
-                ),
-            )
-        )
-        self.logger.info(f"DOCX-RAG-Tool added: {location}")
-
-    def addTxt(self, location):
-        self.tools.append(
-            TXTSearchTool(
-                txt=location,
-                config=dict(
-                    llm=dict(
-                        provider=self.llm_provider,
-                        config=dict(
-                            model=self.llm_name,
-                            base_url=self.llm_url,
-                        ),
-                    ),
-                    embedder=dict(
-                        provider=self.embed_model_provider,
-                        config=dict(
-                            model=self.embed_model_name,
-                            base_url=self.embed_model_url,
-                        ),
-                    ),
-                ),
-            )
-        )
-        self.logger.info(f"TXT-RAG-Tool added: {location}")

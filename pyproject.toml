@@ -1,32 +1,41 @@
 [project]
 name = "ba_ragmas_chatbot"
-version = "0.1.0"
-description = "BA_RAGMAS_chatbot using crewAI"
+version = "0.2.0"
+description = "BA_RAGMAS_chatbot using LangGraph and Ollama"
 authors = [{ name = "Anna Hansl", email = "anna.hansl@univie.ac.at" }]
+maintainers = [{ name = "Marc Rodenbäck", email = "01505546@univie.ac.at" }]
 requires-python = ">=3.10,<=3.13"
 dependencies = [
-  "crewai[tools]==0.86.0",
-  "crewai-tools==0.17.0",
-  "chromadb==0.5.20",
-  "pydantic==2.10.3",
-  "openai==1.57.4",
-  "litellm==1.55.2",
-
-  "langchain==0.3.11",
-  "langchain-ollama==0.2.1",
-  "ollama==0.4.4",
-  "pytest==8.3.4",
-  "pytest-asyncio==0.25.1",
-  "python-telegram-bot==21.9",
-  "transformers==4.47.1",
+    # Core orchestration
+    "langgraph>=0.0.10",          
+    "langchain>=0.3.0",           
+    
+    # LLM & embeddings
+    "langchain-ollama>=0.2.0",    
+    
+    # RAG & vectorstore
+    "langchain-chroma>=0.1.0",    
+    "chromadb>=0.5.0",            
+    "langchain-community>=0.3.0", 
+    
+    # document parsing & tools
+    "pypdf>=5.0.0",               
+    "python-docx>=1.0.0",         
+    "beautifulsoup4>=4.12.0",     
+    "duckduckgo-search>=6.0.0",   
+    
+    # interface
+    "python-telegram-bot>=21.9",  
+    
+    # utilities
+    "pydantic>=2.0.0",            
+    "python-dotenv>=1.0.0",       
+    "watchfiles",                 
 ]
 
 [project.scripts]
+
 ba_ragmas_chatbot = "ba_ragmas_chatbot.main:run"
-run_crew = "ba_ragmas_chatbot.main:run"
-train = "ba_ragmas_chatbot.main:train"
-replay = "ba_ragmas_chatbot.main:replay"
-test = "ba_ragmas_chatbot.main:test"
 
 [build-system]
 requires = ["hatchling"]

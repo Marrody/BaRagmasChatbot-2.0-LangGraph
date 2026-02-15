@@ -1,5 +1,5 @@
 chatbot_token:
-  token: 8384880191:AAHSjSmVu-ceiRPCckVDlfay_fEEWf6kiV8
+  token: PLACEHOLDER
 
 agents:
   llm: ollama/llama3.1:8b-instruct-q8_0

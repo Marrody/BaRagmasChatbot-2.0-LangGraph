@@ -1,65 +1,44 @@
 import sys
 import warnings
-
-from .crew import BaRagmasChatbot
-from .chatbot import TelegramBot
+from dotenv import load_dotenv
 from telegram.error import NetworkError
 
-from src.ba_ragmas_chatbot import logger_config
+
+from ba_ragmas_chatbot.chatbot import TelegramBot
+from ba_ragmas_chatbot import logger_config
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
 
 def run():
-    """
-    Run the telegram chatbot.
-    """
+    """Starts the Telegram Bot with LangGraph backend."""
+    load_dotenv()
+    logger = None
     try:
+
         logger = logger_config.get_logger("main")
+        logger.info("🚀 Starting BA_RAGMAS Chatbot (LangGraph Edition)...")
         telegram_bot = TelegramBot()
-        logger.info("run: Telegram bot created.")
+        print("🤖 Bot is starting... Press Ctrl+C to stop.")
         telegram_bot.start_bot()
-        logger.info("run: Telegram bot started and shut down.")
+        logger.info("🛑 Telegram bot stopped.")
+
+    except NetworkError:
+        print("❌ No internet connection. Please connect to a network and restart.")
+        if logger:
+            logger.error("NetworkError: No internet connection.")
+
+    except KeyboardInterrupt:
+        print("\n👋 Bot stopped by user.")
+
+    except Exception as e:
+        print(f"❌ Critical Error: {e}")
+        if logger:
+            logger.exception(f"Critical Error in main: {e}")
+
+    finally:
         logger_config.shutdown()
-    except NetworkError as e:
-        print("No internet connection, please connect your device to a network and restart the program.")
 
-def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        "topic": "AI LLMs"
-    }
-    try:
-        BaRagmasChatbot().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
 
-    except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
-
-def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
-    try:
-        BaRagmasChatbot().crew().replay(task_id=sys.argv[1])
-
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
-
-def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        "topic": "AI LLMs"
-    }
-    try:
-        BaRagmasChatbot().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
+if __name__ == "__main__":
+    run()

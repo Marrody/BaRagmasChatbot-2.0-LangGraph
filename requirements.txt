@@ -1,19 +1,26 @@
-crewai==0.86.0
-crewai-tools==0.17.0
-duckduckgo_api_haystack==0.1.15
-httpcore
-httpx<0.28.0 #Needed for Ollama & LiteLLM
-langchain_ollama==0.2.1
-langchain==0.3.11
-ollama==0.4.4
-pydantic==2.10.3
-python-telegram-bot==21.9
-typing
-telegram
-pytest==8.3.4
-pytest-asyncio==0.25.1
-PyYAML
-transformers==4.47.1
-chromadb==0.5.20
-openai==1.57.4
-litellm==1.55.2
+# coreflow 
+langgraph
+langchain
+langchain-community
+langchain-core
+
+# LLM & AI
+langchain-ollama
+ollama
+
+# RAG & data
+chromadb
+langchain-chroma
+pypdf
+python-docx
+beautifulsoup4
+duckduckgo-search
+
+# interface 
+python-telegram-bot
+
+# utils 
+pydantic
+python-dotenv
+pyyaml
+watchfiles
