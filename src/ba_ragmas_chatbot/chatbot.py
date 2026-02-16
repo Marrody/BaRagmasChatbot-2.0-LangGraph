@@ -1082,9 +1082,11 @@ class TelegramBot:
             result_state = app.invoke(graph_inputs)
 
             final_text = result_state.get("final_article", "⚠️ No article generated.")
+            article_title = inputs.get("topic") or "Article"
+            await self.send_file_response(update, final_text, article_title)
 
-            await query.message.reply_text(final_text)
             self.logger.debug("confirm_button: Graph run successful.")
+
         except Exception as e:
             self.logger.exception(f"confirm_button: error during crew run: {e}")
             await query.message.reply_text(
@@ -1145,7 +1147,8 @@ class TelegramBot:
                     "final_article", "⚠️ No article generated."
                 )
 
-                await update.message.reply_text(final_text)
+                article_title = inputs.get("topic") or "Article"
+                await self.send_file_response(update, final_text, article_title)
                 self.logger.debug("confirm: Graph run successful.")
 
             except Exception as e:
@@ -1203,6 +1206,50 @@ class TelegramBot:
             await update.message.reply_text(f"Error in chat: {e}")
 
         return int(S.FREE_CHAT)
+
+    async def send_file_response(self, update: Update, content: str, topic: str):
+        """
+        creates md.-file of the finished blog-post, hands it to the user and deletes data afterwards.
+        """
+        safe_topic = "".join(
+            c for c in topic if c.isalnum() or c in (" ", "_", "-")
+        ).strip()
+        safe_topic = safe_topic.replace(" ", "_")
+
+        if not safe_topic:
+            safe_topic = "Blog_Draft"
+
+        filename = f"{safe_topic}.md"
+        file_path = DOCUMENTS_DIR / filename
+
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(content)
+
+            await update.effective_message.reply_text(
+                "✅ **Finished!** Here is your draft as md.-file:"
+            )
+
+            await update.effective_message.reply_document(
+                document=file_path, filename=filename, caption=f"📄 Draft: {safe_topic}"
+            )
+            self.logger.info(f"File sent successfully: {filename}")
+
+        except Exception as e:
+            self.logger.error(f"Failed to send file: {e}")
+            await update.effective_message.reply_text(
+                "⚠️ Failed to send file. Trying as blank text..."
+            )
+
+            await update.effective_message.reply_text(content[:4000])
+
+        finally:
+
+            if file_path.exists():
+                try:
+                    os.remove(file_path)
+                except Exception as e:
+                    self.logger.warning(f"Could not delete temp file {file_path}: {e}")
 
     # Start bot
 
