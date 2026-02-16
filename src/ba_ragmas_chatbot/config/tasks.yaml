@@ -1,54 +1,60 @@
 research_task:
   description: >
-    Conduct a thorough research about {topic}, using mainly the resources given to you via the tools.
-    Make sure you find any interesting and relevant information given
-    the current year is 2025.
+    1. Analyze the user's request: "{topic}"
+    2. Search the local vector store for documents.
+    3. IF the documents are insufficient or the topic requires current data, use the Web Search Tool.
+    4. Compile everything into a structured "Research Briefing".
+    Context: {history}
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic} completely in {language}
+    A comprehensive briefing containing:
+    - Key Facts & Figures
+    - Context/Background info
+    - Relevant Quotes (if found)
+    - Sources list
   agent: researcher
 
 editor_task:
   description: >
-    Plan and structure a blog article about {topic}.
-    Make sure to cover the most important pieces of information.
-    Word Count Target: {length}
-    Information Depth: {information_level}
-    Reader Skill Level: {language_level}
-    Writing Style: {tone}
-    Article Language: {language}
-    Extra Notes: {additional_information}
-    Context History: {history}
+    Create a detailed outline based strictly on the "Research Briefing".
+    Requirements:
+    - Length: {length}
+    - Level: {language_level}
+    - Target Audience: {target_audience}
+    - Tone: {tone}
   expected_output: >
-    A list of bullet points of the topic of each paragraph about {topic} completely in {language}
+    A structural plan where each section includes:
+    - Section Headline
+    - Core Bullet points to cover
+    - Style instructions for the writer
   agent: editor
 
 writer_task:
   description: >
-    Write a blog article about {topic} using the list of bullet points provided.
-    Use the list of paragraph topics provided, and base each paragraph on the topic given.
-    Word Count Target: {length}
-    Information Depth: {information_level}
-    Reader Skill Level: {language_level}
-    Writing Style: {tone}
-    Article Language: {language}
-    Extra Notes: {additional_information}
-    Context History: {history}
+    Write the full blog post based on the Editor's Outline and the Researcher's Briefing.
+    Do NOT use outside knowledge. Stick to the briefing.
+    Language: {language}
   expected_output: >
-    A blog article about {topic} completely in {language}
+    A raw draft of the blog post (Markdown)
   agent: writer
 
-proofreader_task:
+fact_check_task:
   description: >
-    Proofread and factcheck the received blog article about {topic}.
-    If a fact is mentioned, check it with the tool.
-    If the language of the article is not {language}, translate it to {language}.
-    Word Count Target: {length}
-    Information Depth: {information_level}
-    Reader Skill Level: {language_level}
-    Writing Style: {tone}
-    Article Language: {language}
-    Extra Notes: {additional_information}
-    Context History: {history}
+    Read the Draft and compare it with the Research Briefing.
+    Check for:
+    1. Hallucinations (claims not in research)
+    2. Logical errors
+    If you find errors, correct the text based on the Briefing.
   expected_output: >
-    The received blog article about completely {topic} in {language}
-  agent: proofreader
+    A fact-checked version of the draft text.
+  agent: fact_checker
+
+polishing_task:
+  description: >
+    Polish the text for the final publication.
+    - Improve flow and readability.
+    - Apply the requested Tone ({tone}).
+    - Ensure perfect Markdown (Headers, Lists, Bold text).
+    - Check grammar for language: {language}.
+  expected_output: >
+    The final, polished blog post ready for publishing.
+  agent: polisher
