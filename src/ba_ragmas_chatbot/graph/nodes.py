@@ -14,13 +14,13 @@ def research_node(state: AgentState):
     """
     Fetches context from vector store AND/OR Web Search.
     """
-    logger.info(f"RESEARCHER gestartet für Thema: {state['topic']}")
+    logger.info(f"RESEARCHER started for topic: {state['topic']}")
 
     agent_cfg = get_agent_config("researcher")
     task_cfg = get_task_config("research_task")
     current_date = datetime.now().strftime("%d. %B %Y")
     history_list = state.get("history", [])
-    logger.info(f"   History-Länge: {len(history_list)} Nachrichten")
+    logger.info(f"History-length: {len(history_list)}")
     history_str = (
         "\n".join(history_list) if history_list else "No previous conversation."
     )
@@ -28,24 +28,24 @@ def research_node(state: AgentState):
     retriever = get_retriever(k=4)
 
     if retriever and state.get("source_documents"):
-        logger.info("   🔍 Suche in lokalen Dokumenten...")
+        logger.info("🔍 Search local documents...")
         try:
             docs = retriever.invoke(state["topic"])
             if docs:
-                logger.info(f"   ✅ {len(docs)} Dokument-Chunks gefunden.")
+                logger.info(f"   ✅ {len(docs)} Document-Chunks found.")
                 context_text += "=== LOCAL DOCUMENTS (HIGH TRUST) ===\n"
                 context_text += "\n\n".join([d.page_content for d in docs])
                 context_text += "\n====================================\n"
             else:
-                logger.info("   ❌ Keine relevanten Dokumente gefunden.")
+                logger.info("❌ Found no relevant documents.")
         except Exception as e:
             logger.error(f"⚠️ Retrieval failed: {e}")
 
-    logger.info(f"🌍 Suche im Web nach: {state['topic']}")
+    logger.info(f"🌍 Search web for: {state['topic']}")
     try:
         web_results = perform_web_search(state["topic"], max_results=3)
         if web_results:
-            logger.info(f"   ✅ {len(web_results)} Web-Ergebnisse gefunden.")
+            logger.info(f"✅ {len(web_results)} Web-results found.")
             context_text += "\n=== WEB SEARCH RESULTS (CHECK DATE) ===\n"
             context_text += "\n".join(
                 [
@@ -73,7 +73,7 @@ def research_node(state: AgentState):
 
     llm = get_llm_for_agent("researcher")
 
-    logger.info("   🤖 Researcher denkt nach...")
+    logger.info("🤖 RESEARCHER started.")
     response = llm.invoke(
         [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
     )
@@ -87,7 +87,7 @@ def research_node(state: AgentState):
 
 
 def editor_node(state: AgentState):
-    logger.info("🧠 EDITOR gestartet.")
+    logger.info("🧠 EDITOR started.")
 
     agent_cfg = get_agent_config("editor")
     task_cfg = get_task_config("editor_task")
@@ -122,7 +122,7 @@ def editor_node(state: AgentState):
 
 
 def writer_node(state: AgentState):
-    logger.info("✍️ WRITER gestartet.")
+    logger.info("✍️ WRITER started.")
 
     agent_cfg = get_agent_config("writer")
     task_cfg = get_task_config("writer_task")
@@ -152,12 +152,12 @@ def writer_node(state: AgentState):
         [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
     )
 
-    logger.info(f"📝 WRITER DRAFT (Erste 200 Zeichen): {response.content[:200]}...")
+    logger.info(f"📝 WRITER DRAFT (first 200 characters): {response.content[:200]}...")
     return {"draft": response.content, "current_status": "Draft written."}
 
 
 def fact_check_node(state: AgentState):
-    logger.info("⚖️ FACT CHECKER gestartet.")
+    logger.info("⚖️ FACT_CHECKER started.")
     agent_cfg = get_agent_config("fact_checker")
     task_cfg = get_task_config("fact_check_task")
     draft_text = state.get("draft", "")
@@ -174,12 +174,12 @@ def fact_check_node(state: AgentState):
         [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
     )
 
-    logger.info("✅ Fact Check abgeschlossen.")
+    logger.info("✅ Fact Check finished.")
     return {"draft": response.content, "current_status": "Fact check completed."}
 
 
 def polisher_node(state: AgentState):
-    logger.info("✨ POLISHER gestartet.")
+    logger.info("✨ POLISHER started.")
 
     agent_cfg = get_agent_config("polisher")
     task_cfg = get_task_config("polishing_task")
@@ -197,5 +197,5 @@ def polisher_node(state: AgentState):
         [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
     )
 
-    logger.info("✅ Polishing abgeschlossen.")
+    logger.info("✅ Polishing finished.")
     return {"final_article": response.content, "current_status": "Polishing finished."}
