@@ -1,0 +1,68 @@
+research_task:
+  description: >
+    1. Analyze the user's request: "{topic}"
+    2. Search the local vector store for documents.
+    3. IF the documents are insufficient or the topic requires current data, use the Web Search Tool.
+    4. Compile everything into a structured "Research Briefing".
+    5. IMPORTANT: Identify the source of every fact (Local Document vs. Web Search).
+    Context: {history}
+  expected_output: >
+    A structured briefing containing ONLY:
+    - Key Facts & Figures (with source indication)
+    - Context/Background info
+    - Relevant Quotes
+    - Sources list
+    DO NOT add any conversational filler like "Here is the briefing".
+  agent: researcher
+
+editor_task:
+  description: >
+    Create a detailed outline based strictly on the "Research Briefing".
+    Requirements:
+    - Length: {length}
+    - Level: {language_level}
+    - Target Audience: {target_audience}
+    - Tone: {tone}
+  expected_output: >
+    A structural plan (Markdown) where each section includes:
+    - Section Headline
+    - Core Bullet points to cover
+    - Style instructions for the writer
+    Output ONLY the outline. No intro, no outro.
+  agent: editor
+
+writer_task:
+  description: >
+    Write the full blog post based on the Editor's Outline and the Researcher's Briefing.
+    Do NOT use outside knowledge. Stick to the briefing.
+    Language: {language}
+  expected_output: >
+    A raw draft of the blog post (Markdown).
+    Output ONLY the article text. Do NOT write "Here is the draft" or "I wrote this based on...".
+  agent: writer
+
+fact_check_task:
+  description: >
+    Read the Draft and compare it with the Research Briefing.
+    Check for:
+    1. Hallucinations (claims not in research)
+    2. Logical errors
+    If you find errors, SILENTLY correct the text based on the Briefing.
+    Do NOT list the errors you found.
+  expected_output: >
+    The corrected draft text (Markdown).
+    Output ONLY the final text. NO "Changes made" section. NO "I corrected the following...".
+  agent: fact_checker
+
+polishing_task:
+  description: >
+    Polish the text for the final publication.
+    - Improve flow and readability.
+    - Apply the requested Tone ({tone}).
+    - Ensure perfect Markdown (Headers, Lists, Bold text).
+    - Check grammar for language: {language}.
+    - IMPORTANT: Remove any remaining meta-comments or internal notes from previous agents.
+  expected_output: >
+    The final, polished blog post ready for publishing.
+    Output ONLY the final content. NO conversational filler.
+  agent: polisher

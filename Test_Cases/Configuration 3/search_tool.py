@@ -1,7 +1,7 @@
 from duckduckgo_search import DDGS
 from typing import List, Dict
 from urllib.parse import urlparse
-import os
+
 
 BLACKLIST_DOMAINS = [
     "youtube.com",
