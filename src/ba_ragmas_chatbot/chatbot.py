@@ -1042,7 +1042,6 @@ class TelegramBot:
         )
 
         await query.edit_message_text(summary_text)
-        await query.message.reply_text("Generating your article, please wait... ✅")
 
         inputs = {
             "topic": user_data.get("topic"),
@@ -1079,9 +1078,49 @@ class TelegramBot:
 
             app = create_graph()
 
-            result_state = app.invoke(graph_inputs)
+            status_text = "🚀 GENERATION STATUS\n\n"
+            status_msg = await update.effective_message.reply_html(
+                status_text + "⏳ 🕵️ Researcher is gathering information..."
+            )
 
-            final_text = result_state.get("final_article", "⚠️ No article generated.")
+            final_state = graph_inputs
+
+            async for output in app.astream(graph_inputs):
+                for node_name, state_update in output.items():
+                    final_state.update(state_update)
+
+                    if node_name == "researcher":
+                        status_text += "✅ 🕵️ Researcher finished.\n"
+                        await status_msg.edit_text(
+                            status_text + "⏳ 🏗️ Editor is creating the outline..."
+                        )
+
+                    elif node_name == "editor":
+                        status_text += "✅ 🏗️ Editor finished.\n"
+                        await status_msg.edit_text(
+                            status_text + "⏳ ✍️ Writer is drafting the article..."
+                        )
+
+                    elif node_name == "writer":
+                        status_text += "✅ ✍️ Writer finished.\n"
+                        await status_msg.edit_text(
+                            status_text + "⏳ ⚖️ Fact Checker is verifying facts..."
+                        )
+
+                    elif node_name == "fact_checker":
+                        status_text += "✅ ⚖️ Fact Checker finished.\n"
+                        await status_msg.edit_text(
+                            status_text + "⏳ ✨ Polisher is formatting the text..."
+                        )
+
+                    elif node_name == "polisher":
+                        status_text += "✅ ✨ Polisher finished.\n"
+                        await status_msg.edit_text(
+                            status_text + "🎉 Generation complete!"
+                        )
+
+            final_text = final_state.get("final_article", "⚠️ No article generated.")
+
             article_title = inputs.get("topic") or "Article"
             await self.send_file_response(update, final_text, article_title)
 
@@ -1100,10 +1139,6 @@ class TelegramBot:
         self.logger.debug(f"confirm: {text}")
 
         if text in ("yes", "y", "ja"):
-
-            await update.message.reply_text(
-                "Generating your article, please wait... ✅"
-            )
 
             inputs = {
                 "topic": context.user_data.get("topic"),
@@ -1142,10 +1177,48 @@ class TelegramBot:
                 }
 
                 app = create_graph()
-                result_state = app.invoke(graph_inputs)
-                final_text = result_state.get(
-                    "final_article", "⚠️ No article generated."
+                status_text = "🚀 GENERATION STATUS\n\n"
+                status_msg = await update.effective_message.reply_html(
+                    status_text + "⏳ 🕵️ Researcher is gathering information..."
                 )
+
+                final_state = graph_inputs
+
+                async for output in app.astream(graph_inputs):
+                    for node_name, state_update in output.items():
+                        final_state.update(state_update)
+
+                        if node_name == "researcher":
+                            status_text += "✅ 🕵️ Researcher finished.\n"
+                            await status_msg.edit_text(
+                                status_text + "⏳ 🏗️ Editor is creating the outline..."
+                            )
+
+                        elif node_name == "editor":
+                            status_text += "✅ 🏗️ Editor finished.\n"
+                            await status_msg.edit_text(
+                                status_text + "⏳ ✍️ Writer is drafting the article..."
+                            )
+
+                        elif node_name == "writer":
+                            status_text += "✅ ✍️ Writer finished.\n"
+                            await status_msg.edit_text(
+                                status_text + "⏳ ⚖️ Fact Checker is verifying facts..."
+                            )
+
+                        elif node_name == "fact_checker":
+                            status_text += "✅ ⚖️ Fact Checker finished.\n"
+                            await status_msg.edit_text(
+                                status_text + "⏳ ✨ Polisher is formatting the text..."
+                            )
+
+                        elif node_name == "polisher":
+                            status_text += "✅ ✨ Polisher finished.\n"
+                            await status_msg.edit_text(
+                                status_text + "🎉 Generation complete!"
+                            )
+
+                final_text = final_state.get("final_article", "⚠️ No article generated.")
 
                 article_title = inputs.get("topic") or "Article"
                 await self.send_file_response(update, final_text, article_title)
@@ -1227,7 +1300,7 @@ class TelegramBot:
                 f.write(content)
 
             await update.effective_message.reply_text(
-                "✅ **Finished!** Here is your draft as md.-file:"
+                "✅ FINISHED! Here is your draft as md.-file:"
             )
 
             await update.effective_message.reply_document(
