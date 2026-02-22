@@ -117,6 +117,13 @@ Create a `.env` file in the repository root (or edit your existing one) and set:
 TELEGRAM_TOKEN=YOUR_TOKEN_FROM_BOTFATHER
 ```
 
+as fallback you can also use `src\ba_ragmas_chatbot\config\configs.yaml`:
+
+
+```text
+token=YOUR_TOKEN_FROM_BOTFATHER
+```
+
 
 ---
 ## 5) Start the Bot
