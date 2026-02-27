@@ -65,38 +65,6 @@ Keep this token private.
 ---
 ## 3) Installation (Linux)
 
-This project supports multiple installation approaches.
-
-### Option A - pip + venv 
-
-```bash
-git clone <repository_url>
-cd <project_folder>
-
-python3 -m venv .venv
-source .venv/bin/activate
-
-pip install -r requirements.txt
-```
-
-### Option B - uv 
-
-Install uv:
-
-```bash
-curl -Ls https://astral.sh/uv/install.sh | sh
-```
-
-Then:
-
-```bash
-git clone <repository_url>
-cd <project_folder>
-
-uv sync
-```
-
-### Option C - Editable install 
 
 ```bash
 git clone <repository_url>
@@ -140,7 +108,7 @@ From the project root:
 
 ```bash
 source .venv/bin/activate  # only if you used venv
-python -m ba_ragmas_chatbot.chatbot
+python -m ba_ragmas_chatbot.main
 ```
 
 You should see log output that the bot is running. Open your bot in Telegram and start chatting.
