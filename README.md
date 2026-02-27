@@ -10,7 +10,7 @@ The system uses:
 ---
 ## Prerequisites
 
-- Python **>= 3.10**
+- Python **>= 3.10, <=3.13**
 - Git
 - A Telegram account
 - GPU with at least 8GB VRAM
