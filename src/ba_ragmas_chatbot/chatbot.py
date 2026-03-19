@@ -173,13 +173,13 @@ class TelegramBot:
 
     def build_website_keyboard(self) -> InlineKeyboardMarkup:
         keyboard = [
-            [InlineKeyboardButton("🚫 No website", callback_data="website:no")],
+            [InlineKeyboardButton("🚫 No (more) website", callback_data="website:no")],
         ] + self.build_navigation()
         return InlineKeyboardMarkup(keyboard)
 
     def build_document_keyboard(self) -> InlineKeyboardMarkup:
         keyboard = [
-            [InlineKeyboardButton("🚫 No document", callback_data="document:no")],
+            [InlineKeyboardButton("🚫 No (more) document", callback_data="document:no")],
         ] + self.build_navigation()
         return InlineKeyboardMarkup(keyboard)
 
@@ -270,7 +270,6 @@ class TelegramBot:
         if state == S.TOPIC_OR_TASK:
             text = (
                 "🔵⚪⚪⚪⚪⚪⚪⚪⚪⚪⚪\n\n"
-                "Topic or Task\n\n"
                 "Let's configure your blog article! ✍️\n\n"
                 "First, do you already have a <b>TOPIC</b> or rather a <b>TASK</b> "
                 "the article should fulfil?"
@@ -306,7 +305,7 @@ class TelegramBot:
         elif state == S.WEBSITE:
             text = (
                 "🔵🔵🔵⚪⚪⚪⚪⚪⚪⚪⚪\n\n"
-                "Do you have a website with information that should be included?\n"
+                "Do you have a <b>WEBSITE</b> with information that should be included?\n"
                 "If yes, please send the URL.\n"
                 "If not, tap the button below or type 'no'."
             )
@@ -330,7 +329,7 @@ class TelegramBot:
         elif state == S.LENGTH:
             text = (
                 "🔵🔵🔵🔵🔵⚪⚪⚪⚪⚪⚪\n\n"
-                "How long should the blog article be? Choose one of the options below 👇"
+                "What <b>LENGTH</b> should the blog article have? 👇"
             )
             sent = await message.reply_html(
                 text, reply_markup=self.build_length_keyboard()
@@ -484,13 +483,15 @@ class TelegramBot:
                 "• <b>Content:</b> Define a Topic or specific Task\n"
                 "• <b>Knowledge:</b> Add Sources (Websites 🔗 / Documents 📄)\n"
                 "• <b>Style:</b> Set Length, Tone, Language & Information Level\n\n"
-                "<b>🚀 Navigation Features:</b>\n"
-                "You can control the process at any time:\n\n"
-                "💬 <b>Free Chat (Pause)</b> - Switch to chat mode to brainstorm ideas or verify your uploaded documents. I'll keep the context for the article!\n"
-                "⬅️ <b>Back</b> - Go one step back to adjust your previous answer\n"
-                "🔁 <b>Restart</b> - Reset the wizard and start from scratch\n\n"
+                "<b>⌨️ Custom Inputs:</b>\n"
+                "You are not restricted to the provided buttons! You can always type your own custom text for any step (e.g., instead of clicking 'Short', simply type 'under 200 words').\n\n"
+                "<b>🚀 Navigation & Memory:</b>\n"
+                "• 💬 <b>Free Chat (Pause)</b> - Pause the wizard to brainstorm or chat about your uploaded sources. I'll remember our conversation!\n"
+                "• ⬅️ <b>Back</b> - Go one step back. This deletes your last text setting, but uploaded <b>Documents</b> and <b>Websites</b> remain safely stored in memory.\n"
+                "• 🔁 <b>Restart</b> - Completely reset the wizard, clear all memory, and delete all uploaded files.\n\n"
                 "Ready to create content? Start the configuration below 👇"
             )
+
             await message.reply_html(
                 text,
                 reply_markup=self.build_start_configuration_keyboard(),
@@ -611,11 +612,12 @@ class TelegramBot:
         base_question = (
             "🔵⚪⚪⚪⚪⚪⚪⚪⚪⚪⚪\n\n"
             "Let's configure your blog article! ✍️\n\n"
-            "First, do you already have a *topic* or rather a *task* "
+            "First, do you already have a <b>TOPIC</b> or rather a <b>TASK</b> "
             "the article should fulfil?"
         )
         await query.edit_message_text(
-            f"{base_question}\n\n✅ Selected: {choice.capitalize()}"
+            f"{base_question}\n\n✅ Selected: {choice.capitalize()}",
+            parse_mode="HTML"
         )
 
         if choice == "topic":
@@ -628,9 +630,10 @@ class TelegramBot:
                 update, context, from_state=S.TOPIC_OR_TASK, to_state=S.TASK
             )
 
-        await query.message.reply_text(
-            "Please choose either *Topic* or *Task* using the buttons."
+        await query.message.reply_html(
+            "Please choose either <b>TOPIC</b> or <b>TASK</b> using the buttons."
         )
+
         return int(S.TOPIC_OR_TASK)
 
     async def topic_or_task(self, update: Update, context: CallbackContext) -> int:
@@ -648,8 +651,8 @@ class TelegramBot:
                 update, context, from_state=S.TOPIC_OR_TASK, to_state=S.TASK
             )
 
-        await update.message.reply_text(
-            "Please choose *Topic* or *Task* using the buttons."
+        await update.message.reply_html(
+            "Please choose <b>TOPIC</b> or <b>TASK</b> using the buttons."
         )
         return int(S.TOPIC_OR_TASK)
 
@@ -696,9 +699,7 @@ class TelegramBot:
 
         if text.lower() == "no":
             self.logger.debug("website: user typed 'no'")
-
             await self.clear_last_wizard_keyboard(context)
-
             return await self.go_to_state(
                 update, context, from_state=S.WEBSITE, to_state=S.DOCUMENT
             )
@@ -716,18 +717,30 @@ class TelegramBot:
                 "✅ Got your website. I'll use it as an information source."
             )
             self.logger.info(f"Website added as RAG source: {text}")
+            
+            await self.clear_last_wizard_keyboard(context)
+            text_prompt = (
+                "🔵🔵🔵⚪⚪⚪⚪⚪⚪⚪⚪\n\n"
+                "Do you want to add <b>ANOTHER WEBSITE</b>?\n"
+                "If yes, please send the next URL.\n"
+                "If not, tap the button below or type 'no'."
+            )
+            sent = await message.reply_html(
+                text_prompt, reply_markup=self.build_website_keyboard()
+            )
+            self.set_last_wizard_message(context, sent)
+            return int(S.WEBSITE)
+
         except Exception as e:
             self.logger.exception(f"Error while adding website RAG tool: {e}")
             await message.reply_text(
                 "⚠️ I couldn't process this website as a source.\n"
                 "I'll continue without it. You can still upload a document in the next step."
             )
-
-        await self.clear_last_wizard_keyboard(context)
-
-        return await self.go_to_state(
-            update, context, from_state=S.WEBSITE, to_state=S.DOCUMENT
-        )
+            await self.clear_last_wizard_keyboard(context)
+            return await self.go_to_state(
+                update, context, from_state=S.WEBSITE, to_state=S.DOCUMENT
+            )
 
     async def website_button(self, update: Update, context: CallbackContext) -> int:
         query = update.callback_query
@@ -736,12 +749,14 @@ class TelegramBot:
 
         base_question = (
             "🔵🔵🔵⚪⚪⚪⚪⚪⚪⚪⚪\n\n"
-            "Do you have a website with information that should be included?\n"
+            "Do you have a <b>WEBSITE</b> with information that should be included?\n"
             "If yes, please send the URL.\n"
             "If not, tap the button below or type 'no'."
         )
-
-        await query.edit_message_text(f"{base_question}\n\n✅ Selected: No website")
+        await query.edit_message_text(
+            f"{base_question}\n\n✅ Selected: Proceeding to next step",
+            parse_mode="HTML"
+        )
 
         return await self.go_to_state(
             update, context, from_state=S.WEBSITE, to_state=S.DOCUMENT
@@ -757,9 +772,7 @@ class TelegramBot:
 
         if text is not None and text.lower() == "no" and document is None:
             self.logger.debug("document: user typed 'no'")
-
             await self.clear_last_wizard_keyboard(context)
-
             return await self.go_to_state(
                 update, context, from_state=S.DOCUMENT, to_state=S.LENGTH
             )
@@ -799,22 +812,34 @@ class TelegramBot:
 
             try:
                 context.user_data.setdefault("file_paths", []).append(file_path)
-
                 await message.reply_text(
                     "✅ Got your document. I'll use it as an information source."
                 )
+                
+                await self.clear_last_wizard_keyboard(context)
+                text_prompt = (
+                    "🔵🔵🔵🔵⚪⚪⚪⚪⚪⚪⚪\n\n"
+                    "Do you want to add <b>ANOTHER DOCUMENT</b>?\n"
+                    "If yes, upload it now.\n"
+                    "If not, tap the button below or type 'no'."
+                )
+                sent = await message.reply_html(
+                    text_prompt, reply_markup=self.build_document_keyboard()
+                )
+                self.set_last_wizard_message(context, sent)
+                return int(S.DOCUMENT)
+
             except Exception as e:
                 self.logger.exception(f"Error while adding document RAG tool: {e}")
                 await message.reply_text(
                     "⚠️ I couldn't process this document as a source.\n"
                     "I'll continue without it."
                 )
-
-        await self.clear_last_wizard_keyboard(context)
-
-        return await self.go_to_state(
-            update, context, from_state=S.DOCUMENT, to_state=S.LENGTH
-        )
+                await self.clear_last_wizard_keyboard(context)
+                return await self.go_to_state(
+                    update, context, from_state=S.DOCUMENT, to_state=S.LENGTH
+                )
+        return int(S.DOCUMENT)
 
     async def no_document_button(self, update: Update, context: CallbackContext) -> int:
         query = update.callback_query
@@ -823,12 +848,14 @@ class TelegramBot:
 
         base_question = (
             "🔵🔵🔵🔵⚪⚪⚪⚪⚪⚪⚪\n\n"
-            "Do you have a *document* (PDF, DOCX, TXT) with information to include?\n"
+            "Do you have a <b>DOCUMENT</b> (PDF, DOCX, TXT) with information to include?\n"
             "If yes, upload it now.\n"
             "If not, tap the button below or type 'no'."
         )
-
-        await query.edit_message_text(f"{base_question}\n\n✅ Selected: No document")
+        await query.edit_message_text(
+            f"{base_question}\n\n✅ Selected: Proceeding to next step",
+            parse_mode="HTML"
+        )
 
         return await self.go_to_state(
             update, context, from_state=S.DOCUMENT, to_state=S.LENGTH
@@ -846,10 +873,11 @@ class TelegramBot:
 
         question_text = (
             "🔵🔵🔵🔵🔵⚪⚪⚪⚪⚪⚪\n\n"
-            "How long should the blog article be? Choose one of the options below 👇"
+            "What <b>LENGTH</b> should the blog article have? 👇"
         )
         await query.edit_message_text(
-            f"{question_text}\n\n✅ Selected: {value.capitalize()}"
+            f"{question_text}\n\n✅ Selected: {value.capitalize()}",
+            parse_mode="HTML"
         )
 
         return await self.go_to_state(
@@ -878,10 +906,11 @@ class TelegramBot:
         context.user_data["language_level"] = value
 
         question_text = (
-            "🔵🔵🔵🔵🔵🔵⚪⚪⚪⚪⚪\n\n" "What *language level* should it be? 👇"
+            "🔵🔵🔵🔵🔵🔵⚪⚪⚪⚪⚪\n\n" "What <b>LANGUAGE LEVEL</b> should it be? 👇"
         )
         await query.edit_message_text(
-            f"{question_text}\n\n✅ Selected: {value.capitalize()}"
+            f"{question_text}\n\n✅ Selected: {value.capitalize()}",
+            parse_mode="HTML"
         )
 
         return await self.go_to_state(
@@ -908,10 +937,11 @@ class TelegramBot:
         context.user_data["information"] = value
 
         question_text = (
-            "🔵🔵🔵🔵🔵🔵🔵⚪⚪⚪⚪\n\n" "What *information level* should it be? 👇"
+            "🔵🔵🔵🔵🔵🔵🔵⚪⚪⚪⚪\n\n" "What <b>INFORMATION LEVEL</b> should it be? 👇"
         )
         await query.edit_message_text(
-            f"{question_text}\n\n✅ Selected: {value.capitalize()}"
+            f"{question_text}\n\n✅ Selected: {value.capitalize()}",
+            parse_mode="HTML"
         )
 
         return await self.go_to_state(
@@ -950,10 +980,11 @@ class TelegramBot:
         context.user_data["tone"] = value
 
         question_text = (
-            "🔵🔵🔵🔵🔵🔵🔵🔵🔵⚪⚪\n\nWhat *tone* should the article have? 🎨"
+            "🔵🔵🔵🔵🔵🔵🔵🔵🔵⚪⚪\n\nWhat <b>TONE</b> should the article have? 🎨"
         )
         await query.edit_message_text(
-            f"{question_text}\n\n✅ Selected: {value.capitalize()}"
+            f"{question_text}\n\n✅ Selected: {value.capitalize()}",
+            parse_mode="HTML"
         )
 
         return await self.go_to_state(
@@ -998,12 +1029,12 @@ class TelegramBot:
 
         base_question = (
             "🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵⚪\n\n"
-            "Do you have any *additional information* you want to include?\n"
+            "Do you have any <b>ADDITIONAL INFORMATION</b> you want to include?\n"
             "If not, tap the button below or type 'no'."
         )
-
         await query.edit_message_text(
-            f"{base_question}\n\n✅ Selected: No additional info"
+            f"{base_question}\n\n✅ Selected: No additional info",
+            parse_mode="HTML"
         )
 
         return await self.go_to_state(
