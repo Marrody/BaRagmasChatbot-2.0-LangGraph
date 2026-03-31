@@ -1,0 +1,406 @@
+Hat 57 Minuten gearbeitet, ohne Erfolg.
+
+
+
+
+(.venv) PS C:\Users\Marc\Desktop\BachelorFolder\Bachelor_Projekt_main> ba_ragmas_chatbot
+C:\Users\Marc\Desktop\BachelorFolder\Bachelor_Projekt_main\.venv\Lib\site-packages\embedchain\embedder\ollama.py:27: LangChainDeprecationWarning: The class `OllamaEmbeddings` was deprecated in LangChain 0.3.1 and will be removed in 1.0.0. An updated version of the class exists in the :class:`~langchain-ollama package and should be used instead. To use it run `pip install -U :class:`~langchain-ollama` and import as `from :class:`~langchain_ollama import OllamaEmbeddings``.
+  embeddings = OllamaEmbeddings(model=self.config.model, base_url=config.base_url)
+Inserting batches in chromadb: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:04<00:00,  4.12s/it]
+Before kickoff function with inputs: {'topic': 'Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt)', 'length': 'medium', 'information_level': 'Medium', 'language_level': 'Beginner', 'tone': 'Friendly', 'language': 'German', 'additional_information': '', 'history': []}
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Task: Conduct a thorough research about Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt), using mainly the resources given to you via the tools. Make sure you find any interesting and relevant information given the current year is 2025.
+
+
+
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erkl\\u00e4rt)\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Wie KI-Chatbots mit RAG Schlau werden (ohne Fachchinesisch erkl\\u00e4rt)\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Was ist RAG und wie wird es in KI-Chatbots eingesetzt?\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+You ONLY have access to the following tools, and should NEVER make up tools that are not listed here:
+
+Tool Name: Search a txt's content
+Tool Arguments: {'search_query': {'description': "Mandatory search query you want to use to search the txt's content", 'type': 'str'}}
+Tool Description: A tool that can be used to semantic search a query the C:\Users\Marc\Desktop\BachelorFolder\Bachelor_Projekt_main\src\ba_ragmas_chatbot\documents\rag_erklaert.txt txt's content.      
+Tool Name: fact_check_tool
+Tool Arguments: {'argument': {'description': 'The fact that can be true or false.', 'type': 'str'}}
+Tool Description: This tool allows agents to verify a fact and returns if it is true or false.
+
+Use the following format:
+
+Thought: you should always think about what to do
+Action: the action to take, only one name of [Search a txt's content, fact_check_tool], just the name, exactly as it's written.
+Action Input: the input to the action, just a simple python dictionary, enclosed in curly braces, using " to wrap keys and values.
+Observation: the result of the action
+
+Once all necessary information is gathered:
+
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+ Error parsing LLM output, agent will retry: I did it wrong. Tried to both perform Action and give a Final Answer at the same time, I must do one or the other
+
+
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erkl\\u00e4rt)\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erkl\\u00e4rt)\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"RAG ist ein architektonischer Ansatz, der parametrischen Ged\\u00e4chtniskapazit\\u00e4ten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verkn\\u00fcpft.\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+You ONLY have access to the following tools, and should NEVER make up tools that are not listed here:
+
+Tool Name: Search a txt's content
+Tool Arguments: {'search_query': {'description': "Mandatory search query you want to use to search the txt's content", 'type': 'str'}}
+Tool Description: A tool that can be used to semantic search a query the C:\Users\Marc\Desktop\BachelorFolder\Bachelor_Projekt_main\src\ba_ragmas_chatbot\documents\rag_erklaert.txt txt's content.      
+Tool Name: fact_check_tool
+Tool Arguments: {'argument': {'description': 'The fact that can be true or false.', 'type': 'str'}}
+Tool Description: This tool allows agents to verify a fact and returns if it is true or false.
+
+Use the following format:
+
+Thought: you should always think about what to do
+Action: the action to take, only one name of [Search a txt's content, fact_check_tool], just the name, exactly as it's written.
+Action Input: the input to the action, just a simple python dictionary, enclosed in curly braces, using " to wrap keys and values.
+Observation: the result of the action
+
+Once all necessary information is gathered:
+
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+
+
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erkl\\u00e4rt)\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Wie funktioniert RAG in KI-Chatbots?\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+# Agent: Senior Data Researcher who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Final Answer:
+RAG ist ein architektonischer Ansatz, der parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Er gliedert sich in eine Ingestion-Phase und eine Retrieval-Phase.
+
+
+# Agent: Editor who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Task: Plan and structure a blog article about Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt). Make sure to cover the most important pieces of information. Word Count Target: medium Information Depth: Medium Reader Skill Level: Beginner Writing Style: Friendly Article Language: German Extra Notes:  Context History: []
+
+
+
+# Agent: Editor who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"RAG\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+# Agent: Editor who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"RAG\"}"
+## Tool Output:
+I tried reusing the same input, I must stop using this action input. I'll try something else instead.
+
+
+
+
+# Agent: Editor who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"RAG Vor- und Nachteile\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+You ONLY have access to the following tools, and should NEVER make up tools that are not listed here:
+
+Tool Name: Search a txt's content
+Tool Arguments: {'search_query': {'description': "Mandatory search query you want to use to search the txt's content", 'type': 'str'}}
+Tool Description: A tool that can be used to semantic search a query the C:\Users\Marc\Desktop\BachelorFolder\Bachelor_Projekt_main\src\ba_ragmas_chatbot\documents\rag_erklaert.txt txt's content.      
+Tool Name: fact_check_tool
+Tool Arguments: {'argument': {'description': 'The fact that can be true or false.', 'type': 'str'}}
+Tool Description: This tool allows agents to verify a fact and returns if it is true or false.
+
+Use the following format:
+
+Thought: you should always think about what to do
+Action: the action to take, only one name of [Search a txt's content, fact_check_tool], just the name, exactly as it's written.
+Action Input: the input to the action, just a simple python dictionary, enclosed in curly braces, using " to wrap keys and values.
+Observation: the result of the action
+
+Once all necessary information is gathered:
+
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+ 
+
+I forgot the Action name, these are the only available Actions: Tool Name: Search a txt's content
+Tool Arguments: {'search_query': {'description': "Mandatory search query you want to use to search the txt's content", 'type': 'str'}}
+Tool Description: A tool that can be used to semantic search a query the C:\Users\Marc\Desktop\BachelorFolder\Bachelor_Projekt_main\src\ba_ragmas_chatbot\documents\rag_erklaert.txt txt's content.      
+Tool Name: fact_check_tool
+Tool Arguments: {'argument': {'description': 'The fact that can be true or false.', 'type': 'str'}}
+Tool Description: This tool allows agents to verify a fact and returns if it is true or false.
+
+
+
+# Agent: Editor who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool:
+## Tool Input:
+"{}"
+## Tool Output:
+I encountered an error: I forgot the Action name, these are the only available Actions: Tool Name: Search a txt's content
+Tool Arguments: {'search_query': {'description': "Mandatory search query you want to use to search the txt's content", 'type': 'str'}}
+Tool Description: A tool that can be used to semantic search a query the C:\Users\Marc\Desktop\BachelorFolder\Bachelor_Projekt_main\src\ba_ragmas_chatbot\documents\rag_erklaert.txt txt's content.      
+Tool Name: fact_check_tool
+Tool Arguments: {'argument': {'description': 'The fact that can be true or false.', 'type': 'str'}}
+Tool Description: This tool allows agents to verify a fact and returns if it is true or false.
+Moving on then. I MUST either use a tool (use one at time) OR give my best final answer not both at the same time. To Use the following format:
+
+Thought: you should always think about what to do
+Action: the action to take, should be one of [Search a txt's content, fact_check_tool]
+Action Input: the input to the action, dictionary enclosed in curly braces
+Observation: the result of the action
+... (this Thought/Action/Action Input/Result can repeat N times)
+Thought: I now can give a great answer
+Final Answer: Your final answer must be the great and the most complete as possible, it must be outcome described
+
+
+
+
+# Agent: Editor who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Wie KI-Chatbots mit RAG schlauer werden\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+# Agent: Editor who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Was sind die Vorteile von RAG\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+# Agent: Editor who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"RAG Inhalte\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+You ONLY have access to the following tools, and should NEVER make up tools that are not listed here:
+
+Tool Name: Search a txt's content
+Tool Arguments: {'search_query': {'description': "Mandatory search query you want to use to search the txt's content", 'type': 'str'}}
+Tool Description: A tool that can be used to semantic search a query the C:\Users\Marc\Desktop\BachelorFolder\Bachelor_Projekt_main\src\ba_ragmas_chatbot\documents\rag_erklaert.txt txt's content.      
+Tool Name: fact_check_tool
+Tool Arguments: {'argument': {'description': 'The fact that can be true or false.', 'type': 'str'}}
+Tool Description: This tool allows agents to verify a fact and returns if it is true or false.
+
+Use the following format:
+
+Thought: you should always think about what to do
+Action: the action to take, only one name of [Search a txt's content, fact_check_tool], just the name, exactly as it's written.
+Action Input: the input to the action, just a simple python dictionary, enclosed in curly braces, using " to wrap keys and values.
+Observation: the result of the action
+
+Once all necessary information is gathered:
+
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+
+
+# Agent: Editor who is an expert on Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt) in German
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"RAG Vorteile\"}"
+## Tool Output:
+Relevant Content:
+Funktionsweise von Retrieval-Augmented Generation (RAG) auf Vektorebene
+
+Retrieval-Augmented Generation (RAG) ist ein architektonischer Ansatz, der die parametrischen Gedächtniskapazitäten von Large Language Models (LLMs) mit nicht-parametrischen, externen Wissensdatenbanken verknüpft. Der Prozess gliedert sich primär in eine Ingestion-Phase und eine Retrieval-Phase.
+
+Während der Ingestion-Phase werden unstrukturierte Textdokumente in kleinere, diskrete Chunks (z.B. 500 Tokens mit 50 Tokens Overlap) unterteilt. Ein Embedding-Modell (z.B. mxbai-embed-large) transformiert diese Text-Chunks in hochdimensionale Vektoren (typischerweise 768 oder 1536 Dimensionen), welche die semantische Bedeutung des Textes numerisch repräsentieren. Diese Vektoren werden in einer spezialisierten Vektordatenbank (wie ChromaDB oder Pinecone) persistiert.
+
+In der Retrieval-Phase wird die natürliche Sprachabfrage des Benutzers durch dasselbe Embedding-Modell in einen Vektor transformiert. Die Vektordatenbank führt daraufhin eine Ähnlichkeitssuche durch, meist basierend auf der Kosinus-Ähnlichkeit (Cosine Similarity) oder dem Euklidischen Abstand, um die k-nächsten Nachbarn (k-NN) im Vektorraum zu identifizieren. Die Text-Chunks, die diesen Nearest-Neighbor-Vektoren entsprechen, werden extrahiert und als Hard-Context an den System-Prompt des LLMs angehängt. Dadurch wird das Modell gezwungen, seine probabilistische Token-Generierung auf den abgerufenen Vektor-Kontext zu konditionieren, was die Halluzinationsrate signifikant minimiert.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

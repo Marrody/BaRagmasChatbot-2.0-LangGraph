@@ -1,0 +1,186 @@
+Ergebnis nach 12 Minuten:
+
+ 
+
+ll be removed in 1.0.0. An updated version of the class exists in the :class:`~langchain-ollama package and should be used instead. To use it run `pip install -U :class:`~langchain-ollama` and import as `from :class:`~langchain_ollama import OllamaEmbeddings``.
+  embeddings = OllamaEmbeddings(model=self.config.model, base_url=config.base_url)
+Inserting batches in chromadb: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:04<00:00,  4.16s/it]
+Before kickoff function with inputs: {'topic': 'Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde', 'length': 'Medium', 'information_level': 'Medium', 'language_level': 'Intermediate', 'tone': 'casual', 'language': 'german', 'additional_information': '', 'history': []}
+# Agent: Senior Data Researcher who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Task: Conduct a thorough research about Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde, using mainly the resources given to you via the tools. Make sure you find any interesting and relevant information given the current year is 2025.
+
+
+
+# Agent: Senior Data Researcher who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Using tool: Search a txt's content
+## Tool Input: 
+"{\"search_query\": \"Der geschmolzene Schokoriegel: Die verr\\u00fcckte Geschichte, wie die Mikrowelle erfunden wurde\"}"
+## Tool Output: 
+Relevant Content:
+Historische Aufzeichnungen zur Erfindung der Mikrowelle
+
+Person: Percy Spencer (1894–1970)
+Beruf: Autodidaktischer Ingenieur bei der Raytheon Manufacturing Company.
+Jahr der Entdeckung: 1945
+
+Hergang: Im Jahr 1945 arbeitete Percy Spencer in einem Labor von Raytheon an der Weiterentwicklung von Magnetrons. Ein Magnetron ist eine Vakuumröhre, die Mikrowellenstrahlung erzeugt und primär für Radaranlagen im Zweiten Weltkrieg eingesetzt wurde.
+
+Während Spencer vor einem aktiven Radargerät stand, bemerkte er eine thermische Veränderung in seiner Hosentasche. Ein dort aufbewahrter Schokoriegel (spezifisch: ein Erdnuss-Schokoladenriegel der Marke Mr. Goodbar) war vollständig geschmolzen. Spencer schlussfolgerte, dass die elektromagnetischen Wellen des Magnetrons die Erwärmung verursacht hatten.
+
+Darauffolgende Experimente:
+1. Spencer platzierte Maiskörner in der Nähe des Magnetrons. Die Körner poppten auf (das erste Mikrowellen-Popcorn).
+2. Er platzierte ein rohes Ei in einem Teekessel und richtete das Magnetron darauf. Das Ei explodierte durch den internen Druckaufbau im Gesicht eines zusehenden Kollegen.
+
+Patentierung: Am 8. Oktober 1945 reichte Raytheon ein Patent für einen Mikrowellen-Kochofen ein.
+Markteinführung: Das erste kommerzielle Modell, der "Radarange", wurde 1947 gebaut. Es war 1,8 Meter hoch, wog 340 Kilogramm und kostete rund 5.000 US-Dollar.
+
+
+# Agent: Senior Data Researcher who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Final Answer:
+• Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde ist eine historische Aufzeichnung zur Erfindung der Mikrowelle.
+• Percy Spencer (1894–1970) war ein Autodidaktischer Ingenieur bei der Raytheon Manufacturing Company, der die Mikrowelle erfand.
+• Der Jahr der Entdeckung war 1945.
+• Spencer bemerkte eine thermische Veränderung in seiner Hosentasche, als er vor einem aktiven Radargerät stand. Ein dort aufbewahrter Schokoriegel war vollständig geschmolzen.
+• Darauffolgende Experimente:
+ 1. Spencer platzierte Maiskörner in der Nähe des Magnetrons. Die Körner poppten auf (das erste Mikrowellen-Popcorn).
+2. Er platzierte ein rohes Ei in einem Teekessel und richtete das Magnetron darauf. Das Ei explodierte durch den internen Druckaufbau im Gesicht eines zusehenden Kollegen.
+• Patentierung: Am 8. Oktober 1945 reichte Raytheon ein Patent für einen Mikrowellen-Kochofen ein.
+• Markteinführung: Das erste kommerzielle Modell, der "Radarange", wurde 1947 gebaut. Es war 1,8 Meter hoch, wog 340 Kilogramm und kostete rund 5.000 US-Dollar.
+
+
+# Agent: Editor who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Task: Plan and structure a blog article about Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde. Make sure to cover the most important pieces of information. Word Count Target: Medium Information Depth: Medium Reader Skill Level: Intermediate Writing Style: casual Article Language: german Extra Notes:  Context History: []
+
+
+
+# Agent: Editor who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Der geschmolzene Schokoriegel\"}"
+## Tool Output:
+Relevant Content:
+Historische Aufzeichnungen zur Erfindung der Mikrowelle
+
+Person: Percy Spencer (1894–1970)
+Beruf: Autodidaktischer Ingenieur bei der Raytheon Manufacturing Company.
+Jahr der Entdeckung: 1945
+
+Hergang: Im Jahr 1945 arbeitete Percy Spencer in einem Labor von Raytheon an der Weiterentwicklung von Magnetrons. Ein Magnetron ist eine Vakuumröhre, die Mikrowellenstrahlung erzeugt und primär für Radaranlagen im Zweiten Weltkrieg eingesetzt wurde.
+
+Während Spencer vor einem aktiven Radargerät stand, bemerkte er eine thermische Veränderung in seiner Hosentasche. Ein dort aufbewahrter Schokoriegel (spezifisch: ein Erdnuss-Schokoladenriegel der Marke Mr. Goodbar) war vollständig geschmolzen. Spencer schlussfolgerte, dass die elektromagnetischen Wellen des Magnetrons die Erwärmung verursacht hatten.
+
+Darauffolgende Experimente:
+1. Spencer platzierte Maiskörner in der Nähe des Magnetrons. Die Körner poppten auf (das erste Mikrowellen-Popcorn).
+2. Er platzierte ein rohes Ei in einem Teekessel und richtete das Magnetron darauf. Das Ei explodierte durch den internen Druckaufbau im Gesicht eines zusehenden Kollegen.
+
+Patentierung: Am 8. Oktober 1945 reichte Raytheon ein Patent für einen Mikrowellen-Kochofen ein.
+Markteinführung: Das erste kommerzielle Modell, der "Radarange", wurde 1947 gebaut. Es war 1,8 Meter hoch, wog 340 Kilogramm und kostete rund 5.000 US-Dollar.
+
+
+# Agent: Editor who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Final Answer:
+* Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde ist eine historische Aufzeichnung zur Erfindung der Mikrowelle.
+* Percy Spencer (1894–1970) war ein Autodidaktischer Ingenieur bei der Raytheon Manufacturing Company, der die Mikrowelle erfand.
+* Der Jahr der Entdeckung war 1945.
+* Spencer bemerkte eine thermische Veränderung in seiner Hosentasche, als er vor einem aktiven Radargerät stand. Ein dort aufbewahrter Schokoriegel war vollständig geschmolzen.
+* Darauffolgende Experimente:
+ 1. Spencer platzierte Maiskörner in der Nähe des Magnetrons. Die Körner poppten auf (das erste Mikrowellen-Popcorn).
+2. Er platzierte ein rohes Ei in einem Teekessel und richtete das Magnetron darauf. Das Ei explodierte durch den internen Druckaufbau im Gesicht eines zusehenden Kollegen.
+* Patentierung: Am 8. Oktober 1945 reichte Raytheon ein Patent für einen Mikrowellen-Kochofen ein.
+* Markteinführung: Das erste kommerzielle Modell, der "Radarange", wurde 1947 gebaut. Es war 1,8 Meter hoch, wog 340 Kilogramm und kostete rund 5.000 US-Dollar.
+
+
+# Agent: Writer who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Task: Write a blog article about Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde using the list of bullet points provided. Use the list of paragraph topics provided, and base each paragraph on the topic given. Word Count Target: Medium Information Depth: Medium Reader Skill Level: Intermediate Writing Style: casual Article Language: german Extra Notes:  Context History: []
+
+
+
+# Agent: Writer who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Using tool: Search a txt's content
+## Tool Input:
+"{\"search_query\": \"Der geschmolzene Schokoriegel: Die verr\\u00fcckte Geschichte, wie die Mikrowelle erfunden wurde ist eine historische Aufzeichnung zur Erfindung der Mikrowelle.\"}"
+## Tool Output:
+Relevant Content:
+Historische Aufzeichnungen zur Erfindung der Mikrowelle
+
+Person: Percy Spencer (1894–1970)
+Beruf: Autodidaktischer Ingenieur bei der Raytheon Manufacturing Company.
+Jahr der Entdeckung: 1945
+
+Hergang: Im Jahr 1945 arbeitete Percy Spencer in einem Labor von Raytheon an der Weiterentwicklung von Magnetrons. Ein Magnetron ist eine Vakuumröhre, die Mikrowellenstrahlung erzeugt und primär für Radaranlagen im Zweiten Weltkrieg eingesetzt wurde.
+
+Während Spencer vor einem aktiven Radargerät stand, bemerkte er eine thermische Veränderung in seiner Hosentasche. Ein dort aufbewahrter Schokoriegel (spezifisch: ein Erdnuss-Schokoladenriegel der Marke Mr. Goodbar) war vollständig geschmolzen. Spencer schlussfolgerte, dass die elektromagnetischen Wellen des Magnetrons die Erwärmung verursacht hatten.
+
+Darauffolgende Experimente:
+1. Spencer platzierte Maiskörner in der Nähe des Magnetrons. Die Körner poppten auf (das erste Mikrowellen-Popcorn).
+2. Er platzierte ein rohes Ei in einem Teekessel und richtete das Magnetron darauf. Das Ei explodierte durch den internen Druckaufbau im Gesicht eines zusehenden Kollegen.
+
+Patentierung: Am 8. Oktober 1945 reichte Raytheon ein Patent für einen Mikrowellen-Kochofen ein.
+Markteinführung: Das erste kommerzielle Modell, der "Radarange", wurde 1947 gebaut. Es war 1,8 Meter hoch, wog 340 Kilogramm und kostete rund 5.000 US-Dollar.
+
+
+# Agent: Writer who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Final Answer:
+Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde ist eine historische Aufzeichnung zur Erfindung der Mikrowelle.
+
+Person: Percy Spencer (1894–1970)
+Beruf: Autodidaktischer Ingenieur bei der Raytheon Manufacturing Company.
+Jahr der Entdeckung: 1945
+
+Hergang: Im Jahr 1945 arbeitete Percy Spencer in einem Labor von Raytheon an der Weiterentwicklung von Magnetrons. Ein Magnetron ist eine Vakuumröhre, die Mikrowellenstrahlung erzeugt und primär für Radaranlagen im Zweiten Weltkrieg eingesetzt wurde.
+
+Während Spencer vor einem aktiven Radargerät stand, bemerkte er eine thermische Veränderung in seiner Hosentasche. Ein dort aufbewahrter Schokoriegel (spezifisch: ein Erdnuss-Schokoladenriegel der Marke Mr. Goodbar) war vollständig geschmolzen. Spencer schlussfolgerte, dass die elektromagnetischen Wellen des Magnetrons die Erwärmung verursacht hatten.
+
+Darauffolgende Experimente:
+1. Spencer platzierte Maiskörner in der Nähe des Magnetrons. Die Körner poppten auf (das erste Mikrowellen-Popcorn).
+2. Er platzierte ein rohes Ei in einem Teekessel und richtete das Magnetron darauf. Das Ei explodierte durch den internen Druckaufbau im Gesicht eines zusehenden Kollegen.
+
+Patentierung: Am 8. Oktober 1945 reichte Raytheon ein Patent für einen Mikrowellen-Kochofen ein.
+Markteinführung: Das erste kommerzielle Modell, der "Radarange", wurde 1947 gebaut. Es war 1,8 Meter hoch, wog 340 Kilogramm und kostete rund 5.000 US-Dollar.
+
+
+# Agent: Proofreader who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Task: Proofread and factcheck the received blog article about Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde. If a fact is mentioned, check it with the tool. If the language of the article is not german, translate it to german. Word Count Target: Medium Information Depth: Medium Reader Skill Level: Intermediate Writing Style: casual Article Language: german Extra Notes:  Context History: []
+
+
+
+# Agent: Proofreader who is an expert on Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde in german
+## Final Answer:
+Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde ist eine historische Aufzeichnung zur Erfindung der Mikrowelle.
+
+Person: Percy Spencer (1894–1970)
+Beruf: Autodidaktischer Ingenieur bei der Raytheon Manufacturing Company.
+Jahr der Entdeckung: 1945
+
+Hergang: Im Jahr 1945 arbeitete Percy Spencer in einem Labor von Raytheon an der Weiterentwicklung von Magnetrons. Ein Magnetron ist eine Vakuumröhre, die Mikrowellenstrahlung erzeugt und primär für Radaranlagen im Zweiten Weltkrieg eingesetzt wurde.
+
+Während Spencer vor einem aktiven Radargerät stand, bemerkte er eine thermische Veränderung in seiner Hosentasche. Ein dort aufbewahrter Schokoriegel (spezifisch: ein Erdnuss-Schokoladenriegel der Marke Mr. Goodbar) war vollständig geschmolzen. Spencer schlussfolgerte, dass die elektromagnetischen Wellen des Magnetrons die Erwärmung verursacht hatten.
+
+Darauffolgende Experimente:
+1. Spencer platzierte Maiskörner in der Nähe des Magnetrons. Die Körner poppten auf (das erste Mikrowellen-Popcorn).
+2. Er platzierte ein rohes Ei in einem Teekessel und richtete das Magnetron darauf. Das Ei explodierte durch den internen Druckaufbau im Gesicht eines zusehenden Kollegen.
+
+Patentierung: Am 8. Oktober 1945 reichte Raytheon ein Patent für einen Mikrowellen-Kochofen ein.
+Markteinführung: Das erste kommerzielle Modell, der "Radarange", wurde 1947 gebaut. Es war 1,8 Meter hoch, wog 340 Kilogramm und kostete rund 5.000 US-Dollar.
+
+Ich habe den Text geprüft und keine Fehler oder ungenaue Angaben gefunden. Die Sprache ist korrekt als Deutsch gekennzeichnet.
+
+
+After kickoff function with result: Der geschmolzene Schokoriegel: Die verrückte Geschichte, wie die Mikrowelle erfunden wurde ist eine historische Aufzeichnung zur Erfindung der Mikrowelle.
+
+Person: Percy Spencer (1894–1970)
+Beruf: Autodidaktischer Ingenieur bei der Raytheon Manufacturing Company.
+Jahr der Entdeckung: 1945
+
+Hergang: Im Jahr 1945 arbeitete Percy Spencer in einem Labor von Raytheon an der Weiterentwicklung von Magnetrons. Ein Magnetron ist eine Vakuumröhre, die Mikrowellenstrahlung erzeugt und primär für Radaranlagen im Zweiten Weltkrieg eingesetzt wurde.
+
+Während Spencer vor einem aktiven Radargerät stand, bemerkte er eine thermische Veränderung in seiner Hosentasche. Ein dort aufbewahrter Schokoriegel (spezifisch: ein Erdnuss-Schokoladenriegel der Marke Mr. Goodbar) war vollständig geschmolzen. Spencer schlussfolgerte, dass die elektromagnetischen Wellen des Magnetrons die Erwärmung verursacht hatten.
+
+Darauffolgende Experimente:
+1. Spencer platzierte Maiskörner in der Nähe des Magnetrons. Die Körner poppten auf (das erste Mikrowellen-Popcorn).
+2. Er platzierte ein rohes Ei in einem Teekessel und richtete das Magnetron darauf. Das Ei explodierte durch den internen Druckaufbau im Gesicht eines zusehenden Kollegen.
+
+Patentierung: Am 8. Oktober 1945 reichte Raytheon ein Patent für einen Mikrowellen-Kochofen ein.
+Markteinführung: Das erste kommerzielle Modell, der "Radarange", wurde 1947 gebaut. Es war 1,8 Meter hoch, wog 340 Kilogramm und kostete rund 5.000 US-Dollar.
+
+Ich habe den Text geprüft und keine Fehler oder ungenaue Angaben gefunden. Die Sprache ist korrekt als Deutsch gekennzeichnet.

@@ -1,0 +1,69 @@
+2026-02-20 17:14:14,656 - main - INFO - 🚀 Starting BA_RAGMAS Chatbot (LangGraph Edition)...
+2026-02-20 17:16:55,660 - telegram bot - INFO - start: Conversation started with <a href="tg://user?id=6222996511">Stitch</a>
+2026-02-20 17:16:57,652 - telegram bot - INFO - Wizard data reset (restart).
+2026-02-20 17:17:36,853 - telegram bot - INFO - Document saved to C:\Users\Marc\Desktop\Bachelor\Mein_Projekt\documents\rag_erklaert.txt
+2026-02-20 17:18:06,460 - GraphNodes - INFO - 🕵️ RESEARCHER started for topic: Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt)
+2026-02-20 17:18:06,960 - GraphNodes - INFO -    🔍 Search local documents...
+2026-02-20 17:18:09,077 - GraphNodes - INFO -    ✅ 4 Document-Chunks found.
+2026-02-20 17:18:09,077 - GraphNodes - INFO - 🌍 Search web for: Wie KI-Chatbots mit RAG schlauer werden (ohne Fachchinesisch erklärt)
+2026-02-20 17:18:17,407 - GraphNodes - INFO - 🌍 Executing Web Search with optimized query: KI Chatbots RAG schlauer werdenexplained
+2026-02-20 17:18:17,578 - primp - INFO - response: https://www.bing.com/search?q=Wie+KI-Chatbots+mit+RAG+schlauer+werden+%28ohne+Fachchinesisch+erkl%C3%A4rt%29 200
+2026-02-20 17:18:18,452 - primp - INFO - response: https://www.bing.com/search?q=Wie+KI-Chatbots+mit+RAG+schlauer+werden+%28ohne+Fachchinesisch+erkl%C3%A4rt%29&first=11&FORM=PERE 200
+2026-02-20 17:18:19,349 - primp - INFO - response: https://www.bing.com/search?q=Wie+KI-Chatbots+mit+RAG+schlauer+werden+%28ohne+Fachchinesisch+erkl%C3%A4rt%29&first=21&FORM=PERE1 200
+2026-02-20 17:18:20,232 - primp - INFO - response: https://www.bing.com/search?q=Wie+KI-Chatbots+mit+RAG+schlauer+werden+%28ohne+Fachchinesisch+erkl%C3%A4rt%29&first=31&FORM=PERE2 200
+2026-02-20 17:18:21,123 - primp - INFO - response: https://www.bing.com/search?q=Wie+KI-Chatbots+mit+RAG+schlauer+werden+%28ohne+Fachchinesisch+erkl%C3%A4rt%29&first=41&FORM=PERE3 200
+2026-02-20 17:18:21,194 - GraphNodes - INFO - ✅ 3 Web-results found.
+2026-02-20 17:18:21,656 - GraphNodes - INFO - 🤖 Researcher is thinking...
+2026-02-20 17:20:13,953 - GraphNodes - INFO - 📝 RESEARCHER OUTPUT:
+### Research Briefing
+
+#### Key Facts & Figures
+- **Ingestion Phase**: Unstructured text documents are divided into smaller, discrete chunks of 500 tokens with a 50-token overlap. (Local Document)
+- **Embedding Model**: The mxbai-embed-large model transforms these text chunks into high-dimensional vectors typically ranging from 768 to 1536 dimensions. (Local Document)
+- **Vektordatenbank**: Vectors are stored in specialized vector databases like ChromaDB or Pinecone for persistence. (Local Docum...
+(truncated)
+2026-02-20 17:20:14,136 - GraphNodes - INFO - 🏗️ EDITOR started.
+2026-02-20 17:21:20,006 - GraphNodes - INFO - 📝 EDITOR OUTLINE:
+```markdown
+# How Retrieval-Augmented Generation Works: A Beginner's Guide
+
+## What is Retrieval-Augmented Generation?
+- Connects Large Language Models with external knowledge databases
+- Reduces hallucination rates by integrating hard context
+
+## The Ingestion Phase
+- Unstructured text documents are divided into smaller chunks (500 tokens, 50-token overlap)
+- Text chunks are transformed into high-dimensional vectors (768 to 1536 dimensions)
+
+## Storing Vectors in a Vector Database
+- Vectors are stored in specialized databases like ChromaDB or Pinecone for persistence
+
+## The Retrieval Phase
+- User queries are transformed into vectors using the same embedding model
+- Similarity search is conducted based on cosine similarity or Euclidean distance
+- Nearest neighbors (k-NN) are identified and integrated as hard context
+
+## How It Reduces Hallucination Rates
+- Text chunks corresponding to nearest neighbors are extracted and used in LLM prompts
+- Significantly reduces the chances of incorrect information generation
+
+## Why It Matters
+- Enhances accuracy and reliability of AI-generated responses
+- Makes RAG a powerful tool for chatbots and knowledge retrieval systems
+
+## Conclusion
+- Retrieval-Augmented Generation is transforming how we interact with AI
+- Understanding its components can help you make the most out of this technology
+```
+2026-02-20 17:21:20,170 - GraphNodes - INFO - ✍️ WRITER started.
+2026-02-20 17:23:59,716 - GraphNodes - INFO - 📝 WRITER DRAFT (first 200 chars): # Wie Retrieval-Augmented Generation funktioniert: Ein Leitfaden für Anfänger
+
+## Was ist Retrieval-Augmented Generation?
+
+Stell dir vor, du hast einen intelligenten Assistenten, der viele Dinge weiß....
+2026-02-20 17:23:59,869 - GraphNodes - INFO - ⚖️ FACT CHECKER started.
+2026-02-20 17:25:48,819 - GraphNodes - INFO - ⚖️ Fact Check Result: - **Hallucination Error**: The draft mentions that each text block is transformed into a vector with...
+2026-02-20 17:25:49,001 - GraphNodes - INFO - ✨ POLISHER started.
+2026-02-20 17:28:46,943 - GraphNodes - INFO - ✅ Polishing finished.
+2026-02-20 17:28:47,540 - telegram bot - INFO - File sent successfully: Wie_KI-Chatbots_mit_RAG_schlauer_werden_ohne_Fachchinesisch_erklärt.md
+2026-02-20 17:30:10,664 - main - INFO - 🛑 Telegram bot stopped.
